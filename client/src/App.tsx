@@ -1,9 +1,10 @@
-import { Switch, Route, Router } from "wouter";
+import { Switch, Route, Router, useLocation } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "./lib/auth";
+import { useEffect } from "react";
 import Landing from "./pages/landing";
 import Onboarding from "./pages/onboarding";
 import PortalLayout from "./pages/portal/portal-layout";
@@ -15,6 +16,14 @@ import Support from "./pages/portal/support";
 import Profile from "./pages/portal/profile";
 import NotFound from "./pages/not-found";
 
+function PortalRedirect() {
+  const [, setLocation] = useLocation();
+  useEffect(() => {
+    setLocation('/portal/dashboard');
+  }, [setLocation]);
+  return null;
+}
+
 function AppRouter() {
   return (
     <Router>
@@ -24,7 +33,7 @@ function AppRouter() {
         <Route path="/portal" nest>
           <PortalLayout>
             <Switch>
-              <Route path="/" component={() => <Dashboard />} />
+              <Route path="/" component={PortalRedirect} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/contribute" component={Contribute} />
               <Route path="/status" component={Status} />

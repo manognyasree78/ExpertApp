@@ -4,6 +4,13 @@ This is the **Ottobon expertApp**, an expert-only platform that allows qualified
 
 The platform follows a structured workflow: Landing page → Authentication → Onboarding → Expert Portal, where each expert goes through approval processes and can contribute knowledge that powers AI agents for client consultations.
 
+## Recent Updates (Aug 12, 2025)
+- Updated portal routing structure per detailed specification requirements
+- Removed Profile Settings from sidebar navigation (accessible only via avatar menu)
+- Implemented proper redirect from `/portal` to `/portal/dashboard`
+- Applied consistent button text color updates across portal components
+- Maintained comprehensive 5-page portal functionality with enhanced features
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
