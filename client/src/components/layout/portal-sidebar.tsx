@@ -8,12 +8,13 @@ import {
   LifeBuoy
 } from "lucide-react";
 
+// Use routes relative to the portal base so navigation works with nested routing
 const navigation = [
-  { name: 'Dashboard', href: '/portal/dashboard', icon: BarChart3 },
-  { name: 'Contribute Knowledge', href: '/portal/contribute', icon: PlusCircle },
-  { name: 'My Knowledge Status', href: '/portal/status', icon: CheckSquare },
-  { name: 'Earnings', href: '/portal/earnings', icon: TrendingUp },
-  { name: 'Support', href: '/portal/support', icon: LifeBuoy },
+  { name: 'Dashboard', href: '/dashboard', icon: BarChart3 },
+  { name: 'Contribute Knowledge', href: '/contribute', icon: PlusCircle },
+  { name: 'My Knowledge Status', href: '/status', icon: CheckSquare },
+  { name: 'Earnings', href: '/earnings', icon: TrendingUp },
+  { name: 'Support', href: '/support', icon: LifeBuoy },
 ];
 
 export function PortalSidebar() {

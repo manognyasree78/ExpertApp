@@ -11,7 +11,8 @@ export function PortalHeader() {
   const [, setLocation] = useLocation();
 
   const handleProfileSettings = () => {
-    setLocation('/portal/profile');
+    // Navigate relative to the portal base to avoid duplicating the path
+    setLocation('/profile');
   };
 
   const handleLogout = () => {

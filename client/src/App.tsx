@@ -19,7 +19,8 @@ import NotFound from "./pages/not-found";
 function PortalRedirect() {
   const [, setLocation] = useLocation();
   useEffect(() => {
-    setLocation('/portal/dashboard');
+    // Navigate to the dashboard using a path relative to /portal
+    setLocation('/dashboard');
   }, [setLocation]);
   return null;
 }

@@ -97,11 +97,12 @@ export default function Dashboard() {
   const userName = getUserName();
 
   const handleContributeKnowledge = () => {
-    setLocation('/portal/contribute');
+    // Use relative paths within the portal router
+    setLocation('/contribute');
   };
 
   const handleReviewFeedback = () => {
-    setLocation('/portal/status');
+    setLocation('/status');
   };
 
   return (
