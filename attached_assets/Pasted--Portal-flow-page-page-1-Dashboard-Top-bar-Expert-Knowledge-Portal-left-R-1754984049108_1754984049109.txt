@@ -1,0 +1,116 @@
+# Portal flow (page → page)
+
+## 1) Dashboard
+
+* **Top bar:** “Expert Knowledge Portal” (left). Right: **Hi, {name}** + circular avatar (initials).
+* **Hero line:** **Welcome, {name}!** short subline about activity overview.
+* **4 KPI cards** (compact, white cards):
+
+  1. **56 Q\&A Pairs** (sub: 3 Articles)
+  2. **\$2,450** (sub: This month: \$320)
+  3. **1,234** (sub: 95% satisfaction)
+  4. **2 agents** (sub: Marketing & Finance)
+* **Quick actions:** “Contribute New Knowledge” → Contribute page, “Review My Feedback” → Status page.
+* **Recent activity list (5):** Q\&A #57 submitted, ROI article approved, \$85 payment processed, new marketing escalation, KB +5 updates.
+
+## 2) Contribute Knowledge
+
+* **Tabs:** **Q\&A Pairs** | Articles (pill tabs, sticky to top of content).
+* **Q\&A Pairs pane:**
+
+  * Block “Q\&A Pair #1” with **Domain/Sub-domain**, **Question**, **Answer**.
+  * Buttons: **+ Add Another Q\&A**, **Upload Bulk Q\&A (CSV/JSON)** (toast “Uploaded (demo)”), **Save & Submit for Review** (toast).
+* **Articles pane:** **Title, Domain, Body** → **Save & Submit for Review** (toast).
+
+## 3) My Knowledge Status & Feedback
+
+* **Filters row:** Status (All / Approved / Under Review / Needs Revision / Rejected), Sort by (Last Updated).
+* **List items with chips:**
+
+  * Digital Marketing ROI — Article — Marketing — **Approved** (green)
+  * Investment Portfolio Diversification — Q\&A Pair — Finance — **Under Review** (yellow)
+  * GDPR Compliance Checklist — Article — Legal — **Needs Revision** (blue)
+  * Social Media Strategy Q\&A Set — Q\&A Pair — Marketing — **Approved** (green)
+  * Startup Funding Basics — Article — Business — **Rejected** (red)
+
+## 4) Earnings & Analytics
+
+* **Top KPIs:** Total **\$14,630**, This Month **\$3,250**, Avg/Contrib **\$47.50**, Interactions **2,840**.
+* **Tabs strip (visual):** Overview | Performance | Payments | **Analytics** (active).
+* **Line chart:** Earnings Trend Jan–Jun (soft uptrend).
+* **Split below:**
+
+  * **Revenue Sources** pie + legend: Q\&A \$6,350; Articles \$4,800; Agent \$2,130; Escalations \$1,350.
+  * **Recent Earnings** list (5) with “Paid” pills and dates.
+
+## 5) Profile Settings  *(open from avatar menu, not sidebar)*
+
+* **Tabs:** Personal | Expertise | Notifications | Payments | Security.
+* **Personal:** avatar + **First/Last, Email, Phone, Location, Company, Bio (counter), LinkedIn, Website** → **Save Changes** (toast).
+* **Expertise:** domain chips (Digital Marketing, SEO Strategy, Business Analytics, Financial Planning), **Verification** list with **Verified/Pending** badges. Bottom stat tiles: **4.8/5.0**, **127 Contributions**, **2,840 User Helps**.
+* **Notifications:** toggles (Email updates, WhatsApp escalations, Monthly summary).
+* **Payments:** method (Bank/PayPal/UPI) + details.
+* **Security:** Change Password, Enable 2FA, Download Data (toasts).
+
+## 6) Support
+
+* Single card with `support@ottobon.in`, SLA “reply within 24 hours on business days”.
+
+---
+
+# Visual language (quick)
+
+* **Light theme:** white cards, subtle borders (#E5E7EB), soft shadow, rounded-xl.
+* **Accent colors:** Approved `#22C55E`, Review `#F59E0B`, Needs Revision `#60A5FA`, Rejected `#EF4444`.
+* **Motion:** 180–220ms for hover/active; focus rings visible.
+
+---
+
+# Routing fix (no more 404)
+
+**Define these exact routes** and use them in clicks:
+
+```
+/portal                 -> PortalShell (layout)
+/portal/dashboard       -> PortalDashboard
+/portal/contribute      -> PortalContribute
+/portal/status          -> PortalStatus
+/portal/earnings        -> PortalEarnings
+/portal/support         -> PortalSupport
+/portal/profile         -> PortalProfile   // open from avatar
+/portal/*               -> redirect to /portal/dashboard
+```
+
+**Sidebar → path mapping**
+
+* Dashboard → `/portal/dashboard`
+* Contribute Knowledge → `/portal/contribute`
+* My Knowledge Status → `/portal/status`
+* Earnings → `/portal/earnings`
+* Support → `/portal/support`
+  *(remove Profile Settings from sidebar to avoid mis-routing)*
+
+**Avatar menu (top-right)**
+
+* Profile Settings → `/portal/profile`
+* Logout → clear localStorage (`auth`, `onboarding`, `approval`) → go to landing or `/portal/dashboard` with defaults.
+
+**Shell requirement:** `PortalShell` must render a **`<Outlet />`** so children pages load inside.
+**Default:** visiting `/portal` should **redirect to \*\*\*\*\*\*\*\*`/portal/dashboard`**.
+
+---
+
+# Data & name display
+
+* Persist to `localStorage.auth.user.name` (fallback: **“Dr. Sarah Johnson”**).
+* Show the name in: header (“Hi, {name}”) and Dashboard H1 (“Welcome, {name}!”).
+* All “Save/Submit/Upload” actions show **toasts** only (static demo).
+
+---
+
+## Final QA checklist
+
+* Each sidebar item opens a different page (no 404).
+* Profile Settings opens only from avatar menu and matches your screenshots.
+* Name renders in header and Dashboard welcome line.
+* Charts/metrics, lists, chips, and buttons match the visuals you shared.
