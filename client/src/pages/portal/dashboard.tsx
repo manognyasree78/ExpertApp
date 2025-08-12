@@ -1,111 +1,131 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { useLocation } from "wouter";
 import { useAuth } from "@/lib/auth";
 import { 
-  MessageSquare, 
   BookOpen, 
   DollarSign, 
-  Star, 
-  TrendingUp,
+  Users, 
+  Bot, 
+  Plus, 
+  FileText,
   CheckCircle,
-  Clock
+  Banknote,
+  AlertCircle,
+  Database
 } from "lucide-react";
+
+const kpiCards = [
+  {
+    title: "Knowledge Contributed",
+    value: "56 Q&A Pairs",
+    subtitle: "3 Articles",
+    icon: BookOpen,
+    color: "text-primary"
+  },
+  {
+    title: "Total Earnings",
+    value: "$2,450",
+    subtitle: "This month: $320",
+    icon: DollarSign,
+    color: "text-green-400"
+  },
+  {
+    title: "User Interactions",
+    value: "1,234",
+    subtitle: "95% satisfaction",
+    icon: Users,
+    color: "text-accent"
+  },
+  {
+    title: "Active Agents",
+    value: "2",
+    subtitle: "Marketing & Finance",
+    icon: Bot,
+    color: "text-yellow-400"
+  }
+];
+
+const recentActivity = [
+  {
+    icon: CheckCircle,
+    text: "Q&A Pair #57 submitted for review",
+    time: "2 hours ago",
+    color: "text-blue-400"
+  },
+  {
+    icon: FileText,
+    text: "Article 'Digital Marketing ROI' approved",
+    time: "4 hours ago",
+    color: "text-green-400"
+  },
+  {
+    icon: Banknote,
+    text: "Revenue sharing payment of $85 processed",
+    time: "1 day ago",
+    color: "text-green-400"
+  },
+  {
+    icon: AlertCircle,
+    text: "New escalation received in Marketing domain",
+    time: "2 days ago",
+    color: "text-yellow-400"
+  },
+  {
+    icon: Database,
+    text: "Knowledge base updated with 5 new entries",
+    time: "3 days ago",
+    color: "text-primary"
+  }
+];
 
 export default function Dashboard() {
   const { auth } = useAuth();
   const [, setLocation] = useLocation();
 
-  const metrics = [
-    {
-      title: "Knowledge Contributed",
-      value: "56 Q&A Pairs",
-      subtitle: "3 Articles",
-      icon: BookOpen,
-      color: "text-primary"
-    },
-    {
-      title: "Total Earnings",
-      value: "$2,450",
-      subtitle: "This month: $320",
-      icon: DollarSign,
-      color: "text-green-600"
-    },
-    {
-      title: "User Interactions",
-      value: "1,234",
-      subtitle: "95% satisfaction",
-      icon: MessageSquare,
-      color: "text-accent"
-    },
-    {
-      title: "Active Agents",
-      value: "2",
-      subtitle: "Marketing & Finance",
-      icon: Star,
-      color: "text-yellow-500"
+  // Get user name from localStorage or auth
+  const getUserName = () => {
+    const storedAuth = localStorage.getItem('localStorage.auth');
+    if (storedAuth) {
+      const authData = JSON.parse(storedAuth);
+      return authData.user?.name || "Dr. Sarah Johnson";
     }
-  ];
+    return auth.user?.name || "Dr. Sarah Johnson";
+  };
 
-  const recentActivity = [
-    {
-      icon: MessageSquare,
-      title: "Q&A Pair #57 submitted for review",
-      time: "2 hours ago",
-      color: "text-primary"
-    },
-    {
-      icon: CheckCircle,
-      title: "Article 'Digital Marketing ROI' approved",
-      time: "1 day ago",
-      color: "text-green-600"
-    },
-    {
-      icon: DollarSign,
-      title: "Revenue sharing payment of $85 processed",
-      time: "2 days ago",
-      color: "text-accent"
-    },
-    {
-      icon: MessageSquare,
-      title: "New escalation received in Marketing domain",
-      time: "3 days ago",
-      color: "text-primary"
-    },
-    {
-      icon: BookOpen,
-      title: "Knowledge base updated with 5 new entries",
-      time: "5 days ago",
-      color: "text-green-600"
-    }
-  ];
+  const userName = getUserName();
+
+  const handleContributeKnowledge = () => {
+    setLocation('/portal/contribute');
+  };
+
+  const handleReviewFeedback = () => {
+    setLocation('/portal/status');
+  };
 
   return (
-    <div className="bg-bg-dark min-h-screen text-white p-8" data-testid="dashboard-page">
+    <div className="space-y-6 text-white" data-testid="dashboard-page">
+      {/* Welcome Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2" data-testid="dashboard-title">
-          Welcome, {auth.user.name}!
-        </h1>
-        <p className="text-text-muted">Here's your expert activity overview.</p>
+        <h1 className="text-4xl font-bold text-white mb-2">Welcome, {userName}!</h1>
+        <p className="text-text-muted text-lg">Here's an overview of your expert activity and contributions.</p>
       </div>
 
-      {/* Metrics Grid */}
+      {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {metrics.map((metric, index) => {
-          const IconComponent = metric.icon;
+        {kpiCards.map((kpi, index) => {
+          const IconComponent = kpi.icon;
           return (
-            <Card key={index} className="bg-card-dark border-border-dark">
+            <Card key={index} className="bg-card-dark border-border-dark hover:border-gray-600 transition-colors">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-text-muted">{metric.title}</p>
-                    <p className="text-2xl font-bold text-white" data-testid={`metric-${metric.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {metric.value}
-                    </p>
-                    <p className="text-sm text-text-muted">{metric.subtitle}</p>
+                  <div className="flex-1">
+                    <p className="text-sm text-text-muted mb-1">{kpi.title}</p>
+                    <p className="text-2xl font-bold text-white mb-1">{kpi.value}</p>
+                    <p className="text-sm text-text-muted">{kpi.subtitle}</p>
                   </div>
-                  <IconComponent className={`h-8 w-8 ${metric.color}`} />
+                  <IconComponent className={`h-8 w-8 ${kpi.color} flex-shrink-0 ml-4`} />
                 </div>
               </CardContent>
             </Card>
@@ -114,78 +134,54 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid lg:grid-cols-2 gap-8 mb-8">
-        <Card className="bg-card-dark border-border-dark">
-          <CardHeader>
-            <CardTitle className="text-white">Quick Actions</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      <Card className="bg-card-dark border-border-dark mb-8">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center">
+            <div className="w-2 h-8 bg-primary rounded-full mr-3"></div>
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-4">
             <Button 
-              onClick={() => setLocation('/portal/contribute')}
-              className="w-full justify-start"
-              variant="outline"
+              onClick={handleContributeKnowledge}
+              className="bg-primary hover:bg-primary-hover"
               data-testid="quick-action-contribute"
             >
-              <BookOpen className="mr-2 h-4 w-4" />
+              <Plus className="mr-2 h-4 w-4" />
               Contribute New Knowledge
             </Button>
             <Button 
-              onClick={() => setLocation('/portal/status')}
-              className="w-full justify-start"
+              onClick={handleReviewFeedback}
               variant="outline"
+              className="border-border-dark text-white hover:bg-gray-800"
               data-testid="quick-action-review"
             >
-              <CheckCircle className="mr-2 h-4 w-4" />
+              <FileText className="mr-2 h-4 w-4" />
               Review My Feedback
             </Button>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-card-dark border-border-dark">
-          <CardHeader>
-            <CardTitle className="text-white">Performance Metrics</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="text-gray-600">Response Time</span>
-                <span className="font-medium text-gray-900">2.3 hrs avg</span>
-              </div>
-              <Progress value={85} className="h-2" />
-            </div>
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="text-gray-600">Client Satisfaction</span>
-                <span className="font-medium text-gray-900">4.9/5.0</span>
-              </div>
-              <Progress value={98} className="h-2" />
-            </div>
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="text-gray-600">Knowledge Utilization</span>
-                <span className="font-medium text-gray-900">73%</span>
-              </div>
-              <Progress value={73} className="h-2" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Recent Activity */}
-      <Card>
+      <Card className="bg-card-dark border-border-dark">
         <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
+          <CardTitle className="text-white flex items-center">
+            <div className="w-2 h-8 bg-accent rounded-full mr-3"></div>
+            Recent Activity
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4" data-testid="recent-activity">
+          <div className="space-y-4">
             {recentActivity.map((activity, index) => {
               const IconComponent = activity.icon;
               return (
-                <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                  <IconComponent className={`mr-3 h-5 w-5 ${activity.color}`} />
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">{activity.title}</p>
-                    <p className="text-sm text-gray-600">{activity.time}</p>
+                <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-gray-800/50 transition-colors">
+                  <IconComponent className={`h-5 w-5 ${activity.color} flex-shrink-0 mt-0.5`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white text-sm">{activity.text}</p>
+                    <p className="text-text-muted text-xs mt-1">{activity.time}</p>
                   </div>
                 </div>
               );

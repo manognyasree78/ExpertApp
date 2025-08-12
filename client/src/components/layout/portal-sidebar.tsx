@@ -5,7 +5,8 @@ import {
   PlusCircle, 
   CheckSquare, 
   TrendingUp, 
-  LifeBuoy 
+  LifeBuoy,
+  User
 } from "lucide-react";
 
 const navigation = [
@@ -13,6 +14,7 @@ const navigation = [
   { name: 'Contribute Knowledge', href: '/portal/contribute', icon: PlusCircle },
   { name: 'My Knowledge Status', href: '/portal/status', icon: CheckSquare },
   { name: 'Earnings', href: '/portal/earnings', icon: TrendingUp },
+  { name: 'Profile Settings', href: '/portal/profile', icon: User },
   { name: 'Support', href: '/portal/support', icon: LifeBuoy },
 ];
 

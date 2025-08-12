@@ -1,0 +1,151 @@
+---
+
+# Vibe Coding Prompt — Expert Portal (5 Pages Only)
+
+**Build a single-page app named “Expert Knowledge Portal”.**
+Use a light theme (white cards, soft shadows). Top header + left sidebar layout. All data is static and persisted to `localStorage`.
+
+## 1) Shell & Routing
+
+* Create a **PortalShell** layout with:
+
+  * **Header (top bar):** left title “Expert Knowledge Portal”; right side shows `Hi, {name}` and a circular avatar with initials.
+
+    * **Name source:** `localStorage.auth.user.name`. If missing, default to `"Dr. Sarah Johnson"`. Also store `localStorage.auth.user.email` for consistency. Initials from name.
+    * Avatar dropdown: **Profile Settings**, **Logout** (Logout clears `localStorage.auth` and navigates to `/portal/dashboard` with default name again).
+  * **Sidebar (sticky):** items (with icons) → routes:
+
+    * Dashboard → `/portal/dashboard`
+    * Contribute Knowledge → `/portal/contribute`
+    * My Knowledge Status → `/portal/status`
+    * Earnings → `/portal/earnings`
+    * Profile Settings → `/portal/profile`
+    * Support → `/portal/support` (simple contact card)
+* **Router:**
+
+  * `/portal` → redirect to `/portal/dashboard`
+  * `/portal/dashboard` → Dashboard page
+  * `/portal/contribute` → Contribute Knowledge
+  * `/portal/status` → My Knowledge Status & Feedback
+  * `/portal/earnings` → Earnings & Analytics
+  * `/portal/profile` → Profile Settings
+  * `/portal/support` → Support (small card with `support@ottobon.in`)
+* All navigation is client-side; show an active state on the current sidebar item.
+
+## 2) Dashboard (show the name)
+
+* **Header text:** `Welcome, {name}!` (big, bold). Subtext: “Here’s an overview of your expert activity and contributions.”
+* **KPI cards (4):**
+
+  1. Knowledge Contributed — **56 Q\&A Pairs** (small: “3 Articles”)
+  2. Total Earnings — **\$2,450** (small: “This month: \$320”)
+  3. User Interactions — **1,234** (small: “95% satisfaction”)
+  4. Active Agents — **2** (small: “Marketing & Finance”)
+* **Quick Actions (buttons):**
+
+  * “Contribute New Knowledge” → navigate `/portal/contribute`
+  * “Review My Feedback” → navigate `/portal/status`
+* **Recent Activity (static list of 5):**
+
+  * Q\&A Pair #57 submitted for review
+  * Article “Digital Marketing ROI” approved
+  * Revenue sharing payment of \$85 processed
+  * New escalation received in Marketing domain
+  * Knowledge base updated with 5 new entries
+
+## 3) Contribute Knowledge
+
+* **Tabs:** Q\&A Pairs (default) | Articles
+* **Q\&A Pairs pane:**
+
+  * Card “Q\&A Pair #1”
+  * Fields:
+
+    * Domain/Sub-domain (select: Marketing→SEO; Finance→General; Legal→Compliance; Technology→Cloud; Business→Strategy)
+    * Question (input)
+    * Answer (multiline)
+  * Buttons under the card:
+
+    * “+ Add Another Q\&A” → append another Q\&A card (#2, #3, …)
+    * “Upload Bulk Q\&A (CSV/JSON)” → file picker; show toast “Uploaded (demo)”
+    * **Primary:** “Save & Submit for Review” → toast “Saved and submitted (demo)”
+* **Articles pane:**
+
+  * Title, Domain (select), Body (multiline)
+  * **Primary:** “Save & Submit for Review” → toast
+
+## 4) My Knowledge Status & Feedback
+
+* **Header:** “My Knowledge Status & Feedback”
+* **Controls row:**
+
+  * Filter by Status (All / Approved / Under Review / Needs Revision / Rejected)
+  * Sort by (Last Updated)
+* **List (static rows):**
+
+  1. Digital Marketing ROI — **Article** — Marketing — **Approved** (green chip)
+  2. Investment Portfolio Diversification — **Q\&A Pair** — Finance — **Under Review** (yellow chip)
+  3. GDPR Compliance Checklist — **Article** — Legal — **Needs Revision** (blue chip)
+  4. Social Media Strategy Q\&A Set — **Q\&A Pair** — Marketing — **Approved** (green chip)
+  5. Startup Funding Basics — **Article** — Business — **Rejected** (red chip)
+
+## 5) Earnings & Analytics
+
+* **Top KPI cards (4):**
+
+  * Total Earnings **\$14,630** (+12.5%)
+  * This Month **\$3,250** (+8.2%)
+  * Avg per Contribution **\$47.50** (+5.2% quality bonus)
+  * Agent Interactions **2,840** (95.2% satisfaction)
+* **Tabs row (non-functional visual):** Overview | Performance | Payments | **Analytics** (selected)
+* **Earnings Trend**: simple static line chart (SVG/canvas) Jan→Jun with a gentle uptrend.
+* **Bottom split:**
+
+  * **Left card: “Revenue Sources”** — static pie chart with legend & amounts:
+
+    * Q\&A Pairs \$6,350 (45.2%)
+    * Articles \$4,800 (34.1%)
+    * Agent Usage \$2,130 (15.2%)
+    * Escalations \$1,350 (5.5%)
+  * **Right card: “Recent Earnings”** — list (5):
+
+    * \$850 — Q\&A Contributions — 2024-06-01 — Paid
+    * \$600 — Article Bonus — 2024-06-01 — Paid
+    * \$425 — Usage Revenue — 2024-05-15 — Paid
+    * \$750 — Q\&A Contributions — 2024-05-01 — Paid
+    * \$300 — Escalation Fees — 2024-05-01 — Paid
+
+## 6) Profile Settings  (also reachable from avatar dropdown)
+
+* **Tabs:** Personal | Expertise | Notifications | Payments | Security
+* **Personal tab:**
+
+  * Left: avatar circle with initials + “Change Photo” (no backend)
+  * Fields (two-column when wide): First Name, Last Name, Email, Phone Number, Location, Company, **Professional Bio** (multiline with `172/500` counter), LinkedIn Profile, Personal Website
+  * **Save Changes** → toast “Profile saved (demo)”
+* **Expertise tab:**
+
+  * “Current Expertise Domains” chips: Digital Marketing, SEO Strategy, Business Analytics, Financial Planning (addable via input + `+`)
+  * **Domain Verification Status** list with badges:
+
+    * Digital Marketing — **Verified**
+    * SEO Strategy — **Verified**
+    * Business Analytics — **Pending**
+  * Bottom stats tiles: **4.8/5.0 Expert Rating**, **127 Contributions**, **2,840 User Helps**
+* **Notifications tab:** toggles for Email updates, WhatsApp escalations, Monthly summary (persist booleans to localStorage; toast on save).
+* **Payments tab:** method (Bank Transfer / PayPal / UPI) + Account/ID (store locally; toast).
+* **Security tab:** buttons (Change Password, Enable 2-Factor Auth, Download Data) → show toasts only.
+
+## 7) Interactions & Persistence
+
+* Read/write `localStorage.auth.user.name` so the **Dashboard welcome** and **header “Hi, {name}”** always reflect the current value. If missing, set once to `"Dr. Sarah Johnson"`.
+* All “Save/Submit/Upload” actions show non-blocking **toasts**; no API calls.
+* Sidebar items use exact paths above; keep active state highlight.
+
+## 8) Visual polish
+
+* Use white cards with subtle borders `#E5E7EB`, rounded-xl, spacing as in screenshots.
+* Badge colors: Approved `#22C55E`, Under Review `#F59E0B`, Needs Revision `#60A5FA`, Rejected `#EF4444`.
+* Buttons: primary filled, secondary ghost; hover/active states.
+
+---

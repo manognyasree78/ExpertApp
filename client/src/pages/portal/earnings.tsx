@@ -1,172 +1,119 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { 
-  Calendar, 
-  Wallet, 
-  Clock, 
-  TrendingUp, 
-  BookOpen, 
-  MessageSquare, 
-  Star, 
-  DollarSign 
-} from "lucide-react";
+import { TrendingUp, DollarSign, Users, Star } from "lucide-react";
 
-interface EarningMetric {
-  title: string;
-  amount: string;
-  change: string;
-  changeType: "positive" | "negative" | "neutral";
-  icon: React.ComponentType<any>;
-  color: string;
-}
-
-interface Transaction {
-  id: string;
-  type: string;
-  amount: number;
-  date: string;
-  description: string;
-}
-
-interface RevenueSource {
-  category: string;
-  amount: number;
-  color: string;
-}
-
-const earningMetrics: EarningMetric[] = [
+const kpis = [
   {
     title: "Total Earnings",
-    amount: "$14,630",
+    value: "$14,630",
     change: "+12.5%",
-    changeType: "positive",
-    icon: Wallet,
-    color: "text-green-600"
+    icon: DollarSign,
+    color: "text-green-400"
   },
   {
     title: "This Month",
-    amount: "$3,250",
+    value: "$3,250",
     change: "+8.2%",
-    changeType: "positive",
-    icon: Calendar,
+    icon: TrendingUp,
     color: "text-primary"
   },
   {
-    title: "Avg per Contribution",
-    amount: "$47.50",
-    change: "+5.2% bonus",
-    changeType: "positive",
-    icon: TrendingUp,
-    color: "text-accent"
+    title: "Avg per Contribution", 
+    value: "$47.50",
+    change: "+5.2% quality bonus",
+    icon: Star,
+    color: "text-yellow-400"
   },
   {
     title: "Agent Interactions",
-    amount: "2,840",
+    value: "2,840",
     change: "95.2% satisfaction",
-    changeType: "neutral",
-    icon: MessageSquare,
-    color: "text-yellow-500"
+    icon: Users,
+    color: "text-accent"
   }
 ];
 
-const revenueBreakdown: RevenueSource[] = [
-  { category: "Q&A Pairs", amount: 6350, color: "bg-primary" },
-  { category: "Articles", amount: 4800, color: "bg-accent" },
-  { category: "Agent Usage", amount: 2130, color: "bg-green-500" },
-  { category: "Escalations", amount: 1350, color: "bg-yellow-500" }
+const revenueData = [
+  { source: "Q&A Pairs", amount: "$6,350", percentage: "45.2%", color: "bg-primary" },
+  { source: "Articles", amount: "$4,800", percentage: "34.1%", color: "bg-accent" },
+  { source: "Agent Usage", amount: "$2,130", percentage: "15.2%", color: "bg-yellow-400" },
+  { source: "Escalations", amount: "$1,350", percentage: "5.5%", color: "bg-green-400" }
 ];
 
-const recentTransactions: Transaction[] = [
-  {
-    id: "1",
-    type: "Q&A Pairs",
-    amount: 850,
-    date: "2024-01-12",
-    description: "Monthly Q&A pair revenue share"
-  },
-  {
-    id: "2",
-    type: "Article Bonus",
-    amount: 600,
-    date: "2024-01-11",
-    description: "High-performing article bonus"
-  },
-  {
-    id: "3",
-    type: "Agent Usage",
-    amount: 425,
-    date: "2024-01-10",
-    description: "AI agent interaction revenue"
-  },
-  {
-    id: "4",
-    type: "Q&A Pairs",
-    amount: 750,
-    date: "2024-01-09",
-    description: "Monthly Q&A pair revenue share"
-  },
-  {
-    id: "5",
-    type: "Escalation Fees",
-    amount: 300,
-    date: "2024-01-08",
-    description: "WhatsApp consultation fees"
-  }
+const recentEarnings = [
+  { amount: "$850", type: "Q&A Contributions", date: "2024-06-01", status: "Paid" },
+  { amount: "$600", type: "Article Bonus", date: "2024-06-01", status: "Paid" },
+  { amount: "$425", type: "Usage Revenue", date: "2024-05-15", status: "Paid" },
+  { amount: "$750", type: "Q&A Contributions", date: "2024-05-01", status: "Paid" },
+  { amount: "$300", type: "Escalation Fees", date: "2024-05-01", status: "Paid" }
 ];
+
+// Simple SVG line chart component
+const EarningsChart = () => {
+  const points = "10,80 50,60 90,45 130,35 170,25 210,20";
+  
+  return (
+    <div className="w-full h-64 bg-gray-800 rounded-lg p-4">
+      <h3 className="text-white font-medium mb-4">Earnings Trend (Jan - Jun)</h3>
+      <svg viewBox="0 0 220 100" className="w-full h-40">
+        <defs>
+          <linearGradient id="earningsGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3"/>
+            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0"/>
+          </linearGradient>
+        </defs>
+        <polyline
+          fill="none"
+          stroke="#3B82F6"
+          strokeWidth="2"
+          points={points}
+        />
+        <polygon
+          fill="url(#earningsGradient)"
+          points={`10,90 ${points} 210,90`}
+        />
+        {points.split(' ').map((point, index) => {
+          const [x, y] = point.split(',').map(Number);
+          return (
+            <circle
+              key={index}
+              cx={x}
+              cy={y}
+              r="3"
+              fill="#3B82F6"
+            />
+          );
+        })}
+        <text x="10" y="98" fill="#9CA3AF" fontSize="10">Jan</text>
+        <text x="210" y="98" fill="#9CA3AF" fontSize="10">Jun</text>
+      </svg>
+    </div>
+  );
+};
 
 export default function Earnings() {
-  const totalRevenue = revenueBreakdown.reduce((sum, item) => sum + item.amount, 0);
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
-
   return (
-    <div data-testid="earnings-page">
+    <div className="space-y-6 text-white" data-testid="earnings-page">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="earnings-title">
-          Earnings
-        </h1>
-        <p className="text-gray-600">
-          Track your revenue from knowledge contributions and consultations.
-        </p>
+        <h1 className="text-3xl font-bold text-white mb-2">Earnings & Analytics</h1>
+        <p className="text-text-muted">Track your revenue and performance metrics</p>
       </div>
 
-      {/* Earnings Metrics */}
+      {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {earningMetrics.map((metric, index) => {
-          const IconComponent = metric.icon;
+        {kpis.map((kpi, index) => {
+          const IconComponent = kpi.icon;
           return (
-            <Card key={index}>
+            <Card key={index} className="bg-card-dark border-border-dark">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">{metric.title}</p>
-                    <p className="text-2xl font-bold text-gray-900" data-testid={`metric-${metric.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {metric.amount}
-                    </p>
-                    <p className={`text-sm ${
-                      metric.changeType === 'positive' ? 'text-green-600' : 
-                      metric.changeType === 'negative' ? 'text-red-600' : 'text-gray-500'
-                    }`}>
-                      {metric.change}
-                    </p>
+                    <p className="text-sm text-text-muted">{kpi.title}</p>
+                    <p className="text-2xl font-bold text-white">{kpi.value}</p>
+                    <p className="text-sm text-green-400">{kpi.change}</p>
                   </div>
-                  <IconComponent className={`h-8 w-8 ${metric.color}`} />
+                  <IconComponent className={`h-8 w-8 ${kpi.color}`} />
                 </div>
               </CardContent>
             </Card>
@@ -174,137 +121,95 @@ export default function Earnings() {
         })}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 mb-8">
-        {/* Revenue Breakdown */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue Breakdown</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4" data-testid="revenue-breakdown">
-              {revenueBreakdown.map((source, index) => {
-                const IconComponent = index === 0 ? BookOpen : 
-                                   index === 1 ? MessageSquare :
-                                   index === 2 ? Star : DollarSign;
-                return (
-                  <div key={source.category} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div className="flex items-center">
-                      <IconComponent className={`mr-3 h-5 w-5 ${
-                        index === 0 ? 'text-primary' : 
-                        index === 1 ? 'text-accent' :
-                        index === 2 ? 'text-green-500' : 'text-yellow-500'
-                      }`} />
-                      <span className="font-medium">{source.category}</span>
+      {/* Tabs */}
+      <Tabs defaultValue="analytics" className="w-full">
+        <TabsList className="grid w-full grid-cols-4 bg-card-dark border border-border-dark">
+          <TabsTrigger value="overview" className="data-[state=active]:bg-gray-700">Overview</TabsTrigger>
+          <TabsTrigger value="performance" className="data-[state=active]:bg-gray-700">Performance</TabsTrigger>
+          <TabsTrigger value="payments" className="data-[state=active]:bg-gray-700">Payments</TabsTrigger>
+          <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-white">Analytics</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="analytics" className="space-y-6">
+          {/* Earnings Trend Chart */}
+          <Card className="bg-card-dark border-border-dark">
+            <CardContent className="p-6">
+              <EarningsChart />
+            </CardContent>
+          </Card>
+
+          {/* Revenue Sources and Recent Earnings */}
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Revenue Sources */}
+            <Card className="bg-card-dark border-border-dark">
+              <CardHeader>
+                <CardTitle className="text-white">Revenue Sources</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {revenueData.map((item, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
+                      <span className="text-white">{item.source}</span>
                     </div>
-                    <span className="font-semibold" data-testid={`revenue-${source.category.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {formatCurrency(source.amount)}
-                    </span>
+                    <div className="text-right">
+                      <div className="text-white font-medium">{item.amount}</div>
+                      <div className="text-text-muted text-sm">{item.percentage}</div>
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-            
-            <div className="mt-6 pt-4 border-t border-gray-200">
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold text-gray-900">Total Revenue</span>
-                <span className="text-xl font-bold text-primary" data-testid="total-revenue">
-                  {formatCurrency(totalRevenue)}
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+                ))}
+              </CardContent>
+            </Card>
 
-        {/* Earnings Trend Chart Placeholder */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Earnings Trend</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg">
-              <div className="text-center">
-                <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-500">Earnings trend chart</p>
-                <p className="text-sm text-gray-400">Shows monthly earnings over time</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            {/* Recent Earnings */}
+            <Card className="bg-card-dark border-border-dark">
+              <CardHeader>
+                <CardTitle className="text-white">Recent Earnings</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {recentEarnings.map((earning, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div>
+                      <div className="text-white font-medium">{earning.amount}</div>
+                      <div className="text-text-muted text-sm">{earning.type}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-text-muted text-sm">{earning.date}</div>
+                      <Badge className="bg-green-900/20 text-green-400 border-green-700 border">
+                        {earning.status}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
 
-      {/* Recent Transactions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Earnings</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3" data-testid="recent-transactions">
-            {recentTransactions.map((transaction) => (
-              <div 
-                key={transaction.id} 
-                className="flex justify-between items-center p-4 border-l-4 border-green-500 bg-green-50 rounded"
-                data-testid={`transaction-${transaction.id}`}
-              >
-                <div>
-                  <p className="font-medium text-gray-900" data-testid={`transaction-description-${transaction.id}`}>
-                    {transaction.description}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {transaction.type} • {formatDate(transaction.date)}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span className="font-semibold text-green-600 text-lg" data-testid={`transaction-amount-${transaction.id}`}>
-                    +{formatCurrency(transaction.amount)}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-            <p className="text-gray-600 mb-2">Next payout scheduled for</p>
-            <div className="flex items-center justify-center text-lg font-semibold text-gray-900">
-              <Calendar className="h-5 w-5 mr-2" />
-              January 15, 2024
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        <TabsContent value="overview" className="space-y-6">
+          <Card className="bg-card-dark border-border-dark">
+            <CardContent className="p-8 text-center">
+              <p className="text-text-muted">Overview content would go here</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-      {/* Payment Information */}
-      <Card className="mt-8">
-        <CardHeader>
-          <CardTitle>Payment Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <div className="flex items-center mb-2">
-                <Clock className="h-5 w-5 text-gray-600 mr-2" />
-                <span className="font-medium">Payment Schedule</span>
-              </div>
-              <p className="text-sm text-gray-600">Monthly on the 15th</p>
-            </div>
-            
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <div className="flex items-center mb-2">
-                <Wallet className="h-5 w-5 text-gray-600 mr-2" />
-                <span className="font-medium">Payment Method</span>
-              </div>
-              <p className="text-sm text-gray-600">Bank Transfer (****1234)</p>
-            </div>
-            
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <div className="flex items-center mb-2">
-                <DollarSign className="h-5 w-5 text-gray-600 mr-2" />
-                <span className="font-medium">Pending Amount</span>
-              </div>
-              <p className="text-sm text-gray-600">$423.50</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        <TabsContent value="performance" className="space-y-6">
+          <Card className="bg-card-dark border-border-dark">
+            <CardContent className="p-8 text-center">
+              <p className="text-text-muted">Performance content would go here</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="payments" className="space-y-6">
+          <Card className="bg-card-dark border-border-dark">
+            <CardContent className="p-8 text-center">
+              <p className="text-text-muted">Payments content would go here</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
