@@ -106,11 +106,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="space-y-6" data-testid="dashboard-page">
+    <div className="space-y-6 text-white" data-testid="dashboard-page">
       {/* Welcome Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome, {userName}!</h1>
-        <p className="text-gray-600 text-lg">Here's an overview of your expert activity and contributions.</p>
+        <h1 className="text-4xl font-bold text-white mb-2">Welcome, {userName}!</h1>
+        <p className="text-text-muted text-lg">Here's an overview of your expert activity and contributions.</p>
       </div>
 
       {/* KPI Cards */}
@@ -118,13 +118,13 @@ export default function Dashboard() {
         {kpiCards.map((kpi, index) => {
           const IconComponent = kpi.icon;
           return (
-            <Card key={index} className="bg-white border-gray-200 hover:border-gray-300 transition-colors shadow-sm rounded-xl">
+            <Card key={index} className="bg-card-dark border-border-dark transition-colors shadow-sm rounded-xl">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <p className="text-sm text-gray-600 mb-1">{kpi.title}</p>
-                    <p className="text-2xl font-bold text-gray-900 mb-1">{kpi.value}</p>
-                    <p className="text-sm text-gray-600">{kpi.subtitle}</p>
+                    <p className="text-sm text-text-muted mb-1">{kpi.title}</p>
+                    <p className="text-2xl font-bold text-white mb-1">{kpi.value}</p>
+                    <p className="text-sm text-text-muted">{kpi.subtitle}</p>
                   </div>
                   <IconComponent className={`h-8 w-8 ${kpi.color} flex-shrink-0 ml-4`} />
                 </div>
@@ -135,9 +135,9 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <Card className="bg-white border-gray-200 mb-8 shadow-sm rounded-xl">
+      <Card className="bg-card-dark border-border-dark mb-8 shadow-sm rounded-xl">
         <CardHeader>
-          <CardTitle className="text-gray-900 flex items-center">
+          <CardTitle className="text-white flex items-center">
             <div className="w-2 h-8 bg-primary rounded-full mr-3"></div>
             Quick Actions
           </CardTitle>
@@ -152,10 +152,10 @@ export default function Dashboard() {
               <Plus className="mr-2 h-4 w-4" />
               Contribute New Knowledge
             </Button>
-            <Button 
+            <Button
               onClick={handleReviewFeedback}
               variant="outline"
-              className="border-gray-200 text-gray-900 hover:bg-gray-50"
+              className="border-border-dark text-white hover:bg-bg-dark"
               data-testid="quick-action-review"
             >
               <FileText className="mr-2 h-4 w-4" />
@@ -166,9 +166,9 @@ export default function Dashboard() {
       </Card>
 
       {/* Recent Activity */}
-      <Card className="bg-white border-gray-200 shadow-sm rounded-xl">
+      <Card className="bg-card-dark border-border-dark shadow-sm rounded-xl">
         <CardHeader>
-          <CardTitle className="text-gray-900 flex items-center">
+          <CardTitle className="text-white flex items-center">
             <div className="w-2 h-8 bg-accent rounded-full mr-3"></div>
             Recent Activity
           </CardTitle>
@@ -178,11 +178,11 @@ export default function Dashboard() {
             {recentActivity.map((activity, index) => {
               const IconComponent = activity.icon;
               return (
-                <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-bg-dark transition-colors">
                   <IconComponent className={`h-5 w-5 ${activity.color} flex-shrink-0 mt-0.5`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-gray-900 text-sm">{activity.text}</p>
-                    <p className="text-gray-600 text-xs mt-1">{activity.time}</p>
+                    <p className="text-white text-sm">{activity.text}</p>
+                    <p className="text-text-muted text-xs mt-1">{activity.time}</p>
                   </div>
                 </div>
               );
