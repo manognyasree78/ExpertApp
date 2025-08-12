@@ -113,6 +113,9 @@ export default function Onboarding() {
   };
 
   const onSubmit = (data: OnboardingData) => {
+    console.log('Form submission data:', data);
+    console.log('Guidelines read:', onboarding.guidelinesRead);
+    
     if (!onboarding.guidelinesRead) {
       toast({
         title: "Guidelines Required",
@@ -122,12 +125,23 @@ export default function Onboarding() {
       return;
     }
 
-    setApprovalStatus(true);
-    setLocation('/portal/dashboard');
-    toast({
-      title: "Application submitted successfully!",
-      description: "Welcome to the expertApp expert network.",
-    });
+    try {
+      setApprovalStatus(true);
+      toast({
+        title: "Application submitted successfully!",
+        description: "Welcome to the expertApp expert network.",
+      });
+      setTimeout(() => {
+        setLocation('/portal/dashboard');
+      }, 1000);
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast({
+        title: "Submission Error",
+        description: "There was an error submitting your application. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const isFormValid = () => {
@@ -153,7 +167,6 @@ export default function Onboarding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Brain className="text-primary text-2xl mr-3" />
               <span className="text-xl font-bold text-white">Ottobon expertApp</span>
             </div>
             <Button 
@@ -184,8 +197,8 @@ export default function Onboarding() {
             {/* Section 1: Personal & Contact */}
             <Card className="bg-card-dark border-border-dark">
               <CardHeader>
-                <CardTitle className="flex items-center text-white">
-                  <User className="text-primary mr-3" />
+                <CardTitle className="flex items-center text-white text-lg">
+                  <div className="w-2 h-8 bg-primary rounded-full mr-3"></div>
                   Personal & Contact Information
                 </CardTitle>
               </CardHeader>
@@ -198,7 +211,7 @@ export default function Onboarding() {
                       <FormItem>
                         <FormLabel className="text-text-muted">Full Name *</FormLabel>
                         <FormControl>
-                          <Input className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-fullname" />
+                          <Input className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary" {...field} data-testid="input-fullname" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -211,7 +224,7 @@ export default function Onboarding() {
                       <FormItem>
                         <FormLabel className="text-text-muted">Email *</FormLabel>
                         <FormControl>
-                          <Input type="email" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-email" />
+                          <Input type="email" className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary" {...field} data-testid="input-email" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -226,7 +239,7 @@ export default function Onboarding() {
                         <FormControl>
                           <Input 
                             placeholder="+91 XXXXXXXXXX (include country code)" 
-                            className="bg-bg-light border-border-dark text-white"
+                            className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary"
                             {...field} 
                             data-testid="input-phone"
                           />
@@ -243,7 +256,7 @@ export default function Onboarding() {
                         <FormLabel className="text-text-muted">Country *</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger className="bg-bg-light border-border-dark text-white" data-testid="select-country">
+                            <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-primary focus:ring-primary" data-testid="select-country">
                               <SelectValue placeholder="Select Country" />
                             </SelectTrigger>
                           </FormControl>
@@ -267,7 +280,7 @@ export default function Onboarding() {
                         <FormLabel className="text-text-muted">Time Zone *</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger className="bg-bg-light border-border-dark text-white" data-testid="select-timezone">
+                            <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-primary focus:ring-primary" data-testid="select-timezone">
                               <SelectValue placeholder="Select Time Zone" />
                             </SelectTrigger>
                           </FormControl>

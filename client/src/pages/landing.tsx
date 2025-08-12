@@ -126,7 +126,9 @@ export default function Landing() {
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="bg-bg-dark border-border-dark text-center">
               <CardContent className="p-8">
-                <Brain className="h-12 w-12 text-accent mx-auto mb-4" />
+                <div className="w-12 h-12 bg-accent rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-6 h-6 bg-white rounded-full"></div>
+                </div>
                 <h3 className="text-xl font-semibold mb-4 text-white">Intelligent Routing</h3>
                 <p className="text-text-muted">
                   AI pre-filters queries to ensure you only handle complex cases that require your expertise.
@@ -336,7 +338,6 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
-              <Brain className="text-primary text-2xl mr-3" />
               <span className="text-xl font-bold text-white">Ottobon expertApp</span>
             </div>
             <div className="text-text-muted">

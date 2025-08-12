@@ -30,50 +30,50 @@ export function GuidelinesModal({ open, onOpenChange }: GuidelinesModalProps) {
           <DialogTitle className="text-xl font-bold text-white">Expert Program Guidelines</DialogTitle>
         </DialogHeader>
 
-        <ScrollArea className="flex-1 pr-4">
+        <ScrollArea className="flex-1 pr-4 max-h-[60vh] overflow-y-auto">
           <div className="prose prose-lg max-w-none space-y-6">
             <section>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Welcome to expertApp Expert Network</h3>
-              <p className="text-gray-700 mb-4">
+              <h3 className="text-lg font-semibold text-white mb-4">Welcome to expertApp Expert Network</h3>
+              <p className="text-text-muted mb-4">
                 As an expert on the expertApp platform, you'll be part of an innovative AI-powered consulting ecosystem. 
                 These guidelines ensure quality service delivery and optimal user experience.
               </p>
             </section>
 
             <section>
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">Knowledge Contribution: Powering expertApp AI Agents</h4>
-              <p className="text-gray-700 mb-4">
+              <h4 className="text-lg font-semibold text-white mb-3">Knowledge Contribution: Powering expertApp AI Agents</h4>
+              <p className="text-text-muted mb-4">
                 Your invaluable expertise is the foundation of our AI agents. To ensure our AI can effectively learn and 
                 deliver high-quality insights to users, we require your knowledge to be provided in a structured and comprehensive manner.
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <h5 className="font-semibold text-gray-900 mb-2">1. Purpose of Knowledge Contribution:</h5>
-                  <p className="text-gray-700 mb-4">
+                  <h5 className="font-semibold text-white mb-2">1. Purpose of Knowledge Contribution:</h5>
+                  <p className="text-text-muted mb-4">
                     The knowledge you provide will be used to train our domain-specific AI agents, enabling them to answer 
                     a wide range of user queries confidently.
                   </p>
                 </div>
 
                 <div>
-                  <h5 className="font-semibold text-gray-900 mb-2">2. Recommended Knowledge Formats & Structure:</h5>
-                  <p className="text-gray-700 mb-3">
+                  <h5 className="font-semibold text-white mb-2">2. Recommended Knowledge Formats & Structure:</h5>
+                  <p className="text-text-muted mb-3">
                     To optimize AI learning and retrieval, please structure your knowledge as follows. We encourage clear, 
                     concise, and factual content.
                   </p>
 
                   <div className="ml-4 space-y-3">
                     <div>
-                      <h6 className="font-medium text-gray-900 mb-2">A. Structured Q&A Pairs (Primary Method):</h6>
-                      <p className="text-gray-700 mb-2">
+                      <h6 className="font-medium text-white mb-2">A. Structured Q&A Pairs (Primary Method):</h6>
+                      <p className="text-text-muted mb-2">
                         Provide common questions within your domain and their definitive, expert answers. Think of questions 
                         users would typically ask and provide thorough, yet succinct, responses.
                       </p>
-                      <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                        <p className="font-medium mb-1">Example:</p>
-                        <p className="text-sm mb-1"><strong>Q:</strong> "What are the key differences between Series A and Series B funding?"</p>
-                        <p className="text-sm">
+                      <div className="bg-gray-800 p-4 rounded-lg mb-4 border border-border-dark">
+                        <p className="font-medium mb-1 text-white">Example:</p>
+                        <p className="text-sm mb-1 text-text-muted"><strong>Q:</strong> "What are the key differences between Series A and Series B funding?"</p>
+                        <p className="text-sm text-text-muted">
                           <strong>A:</strong> "Series A focuses on product development and market validation with seed funding, 
                           while Series B is for scaling a proven business model, often with higher valuations and larger investments."
                         </p>
@@ -112,8 +112,8 @@ export function GuidelinesModal({ open, onOpenChange }: GuidelinesModalProps) {
                 </div>
 
                 <div>
-                  <h5 className="font-semibold text-gray-900 mb-2">3. Content Quality & Guidelines:</h5>
-                  <ul className="list-disc pl-6 text-gray-700 mb-4 space-y-1">
+                  <h5 className="font-semibold text-white mb-2">3. Content Quality & Guidelines:</h5>
+                  <ul className="list-disc pl-6 text-text-muted mb-4 space-y-1">
                     <li><strong>Accuracy:</strong> All information must be factually correct and up-to-date within your domain.</li>
                     <li><strong>Clarity & Conciseness:</strong> Write clearly and avoid jargon where simpler terms suffice. Aim for direct answers.</li>
                     <li><strong>Objectivity:</strong> Provide unbiased, professional insights. Avoid personal opinions or promotional content.</li>
