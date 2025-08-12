@@ -82,12 +82,12 @@ export default function Dashboard() {
   ];
 
   return (
-    <div data-testid="dashboard-page">
+    <div className="bg-bg-dark min-h-screen text-white p-8" data-testid="dashboard-page">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="dashboard-title">
+        <h1 className="text-3xl font-bold text-white mb-2" data-testid="dashboard-title">
           Welcome, {auth.user.name}!
         </h1>
-        <p className="text-gray-600">Here's your expert activity overview.</p>
+        <p className="text-text-muted">Here's your expert activity overview.</p>
       </div>
 
       {/* Metrics Grid */}
@@ -95,15 +95,15 @@ export default function Dashboard() {
         {metrics.map((metric, index) => {
           const IconComponent = metric.icon;
           return (
-            <Card key={index}>
+            <Card key={index} className="bg-card-dark border-border-dark">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">{metric.title}</p>
-                    <p className="text-2xl font-bold text-gray-900" data-testid={`metric-${metric.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <p className="text-sm text-text-muted">{metric.title}</p>
+                    <p className="text-2xl font-bold text-white" data-testid={`metric-${metric.title.toLowerCase().replace(/\s+/g, '-')}`}>
                       {metric.value}
                     </p>
-                    <p className="text-sm text-gray-500">{metric.subtitle}</p>
+                    <p className="text-sm text-text-muted">{metric.subtitle}</p>
                   </div>
                   <IconComponent className={`h-8 w-8 ${metric.color}`} />
                 </div>
@@ -115,9 +115,9 @@ export default function Dashboard() {
 
       {/* Quick Actions */}
       <div className="grid lg:grid-cols-2 gap-8 mb-8">
-        <Card>
+        <Card className="bg-card-dark border-border-dark">
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle className="text-white">Quick Actions</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <Button 
@@ -141,9 +141,9 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-card-dark border-border-dark">
           <CardHeader>
-            <CardTitle>Performance Metrics</CardTitle>
+            <CardTitle className="text-white">Performance Metrics</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>

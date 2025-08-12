@@ -265,8 +265,8 @@ export default function Landing() {
             </div>
             <div>
               <img 
-                src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&h=750" 
-                alt="Professional networking and collaboration" 
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&h=750" 
+                alt="Professional team collaboration and consulting" 
                 className="rounded-xl shadow-2xl" 
               />
             </div>
@@ -336,7 +336,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
-              <Bus className="text-primary text-2xl mr-3" />
+              <Brain className="text-primary text-2xl mr-3" />
               <span className="text-xl font-bold text-white">Ottobon expertApp</span>
             </div>
             <div className="text-text-muted">

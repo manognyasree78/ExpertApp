@@ -25,9 +25,9 @@ export function GuidelinesModal({ open, onOpenChange }: GuidelinesModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[85vh]" data-testid="guidelines-modal">
+      <DialogContent className="max-w-4xl max-h-[85vh] bg-bg-dark border-border-dark text-white" data-testid="guidelines-modal">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Expert Program Guidelines</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-white">Expert Program Guidelines</DialogTitle>
         </DialogHeader>
 
         <ScrollArea className="flex-1 pr-4">

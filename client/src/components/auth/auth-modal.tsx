@@ -66,17 +66,17 @@ export function AuthModal({ open, onOpenChange, defaultTab = "signup" }: AuthMod
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md" data-testid="auth-modal">
+      <DialogContent className="sm:max-w-md bg-bg-dark border-border-dark text-white" data-testid="auth-modal">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">
+          <DialogTitle className="text-xl font-bold text-white">
             {activeTab === "login" ? "Welcome Back" : "Join expertApp"}
           </DialogTitle>
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "login" | "signup")}>
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login" data-testid="tab-login">Login</TabsTrigger>
-            <TabsTrigger value="signup" data-testid="tab-signup">Sign Up</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 bg-bg-light border-border-dark">
+            <TabsTrigger value="login" className="data-[state=active]:bg-primary data-[state=active]:text-white" data-testid="tab-login">Login</TabsTrigger>
+            <TabsTrigger value="signup" className="data-[state=active]:bg-primary data-[state=active]:text-white" data-testid="tab-signup">Sign Up</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login" className="space-y-4">
@@ -87,9 +87,9 @@ export function AuthModal({ open, onOpenChange, defaultTab = "signup" }: AuthMod
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="text-text-muted">Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="your@email.com" {...field} data-testid="input-email" />
+                        <Input placeholder="your@email.com" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-email" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -100,15 +100,15 @@ export function AuthModal({ open, onOpenChange, defaultTab = "signup" }: AuthMod
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel className="text-text-muted">Password</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="Password (min 6 characters)" {...field} data-testid="input-password" />
+                        <Input type="password" placeholder="Password (min 6 characters)" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-password" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full" data-testid="button-login">
+                <Button type="submit" className="w-full bg-primary hover:bg-primary-hover text-white" data-testid="button-login">
                   <LogIn className="mr-2 h-4 w-4" />
                   Login
                 </Button>
@@ -124,9 +124,9 @@ export function AuthModal({ open, onOpenChange, defaultTab = "signup" }: AuthMod
                   name="fullName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel className="text-text-muted">Full Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your full name" {...field} data-testid="input-fullname" />
+                        <Input placeholder="Your full name" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-fullname" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -137,9 +137,9 @@ export function AuthModal({ open, onOpenChange, defaultTab = "signup" }: AuthMod
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="text-text-muted">Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="your@email.com" {...field} data-testid="input-email-signup" />
+                        <Input placeholder="your@email.com" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-email-signup" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -150,9 +150,9 @@ export function AuthModal({ open, onOpenChange, defaultTab = "signup" }: AuthMod
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel className="text-text-muted">Password</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="Password (min 6 characters)" {...field} data-testid="input-password-signup" />
+                        <Input type="password" placeholder="Password (min 6 characters)" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-password-signup" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -163,15 +163,15 @@ export function AuthModal({ open, onOpenChange, defaultTab = "signup" }: AuthMod
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
+                      <FormLabel className="text-text-muted">Confirm Password</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="Confirm password" {...field} data-testid="input-confirm-password" />
+                        <Input type="password" placeholder="Confirm password" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-confirm-password" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full" data-testid="button-signup">
+                <Button type="submit" className="w-full bg-primary hover:bg-primary-hover text-white" data-testid="button-signup">
                   <UserPlus className="mr-2 h-4 w-4" />
                   Sign Up
                 </Button>

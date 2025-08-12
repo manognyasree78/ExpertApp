@@ -14,7 +14,7 @@ import { useAuth } from "@/lib/auth";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import { onboardingSchema, type OnboardingData } from "@/lib/validation";
-import { Bus, ArrowLeft, User, Briefcase, Clock, BookOpen, X, Plus } from "lucide-react";
+import { Brain, ArrowLeft, User, Briefcase, Clock, BookOpen, X, Plus } from "lucide-react";
 
 const domains = [
   "Python", "Data Science", "Cloud", "Finance", "Product Management", 
@@ -147,14 +147,14 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50" data-testid="onboarding-page">
+    <div className="min-h-screen bg-bg-dark text-white" data-testid="onboarding-page">
       {/* Minimal Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+      <header className="bg-card-dark border-b border-border-dark shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Bus className="text-primary text-2xl mr-3" />
-              <span className="text-xl font-bold text-gray-900">Ottobon expertApp</span>
+              <Brain className="text-primary text-2xl mr-3" />
+              <span className="text-xl font-bold text-white">Ottobon expertApp</span>
             </div>
             <Button 
               variant="ghost" 
@@ -170,10 +170,10 @@ export default function Onboarding() {
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4" data-testid="onboarding-title">
+          <h1 className="text-4xl font-bold text-white mb-4" data-testid="onboarding-title">
             Join the expertApp Network: Your Journey Starts Here
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-text-muted max-w-3xl mx-auto">
             Please provide your details below. This initial application helps us understand your expertise 
             and how you'd like to partner with expertApp.
           </p>
@@ -182,9 +182,9 @@ export default function Onboarding() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12" data-testid="onboarding-form">
             {/* Section 1: Personal & Contact */}
-            <Card>
+            <Card className="bg-card-dark border-border-dark">
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <CardTitle className="flex items-center text-white">
                   <User className="text-primary mr-3" />
                   Personal & Contact Information
                 </CardTitle>
@@ -196,9 +196,9 @@ export default function Onboarding() {
                     name="fullName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name *</FormLabel>
+                        <FormLabel className="text-text-muted">Full Name *</FormLabel>
                         <FormControl>
-                          <Input {...field} data-testid="input-fullname" />
+                          <Input className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-fullname" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -209,9 +209,9 @@ export default function Onboarding() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email *</FormLabel>
+                        <FormLabel className="text-text-muted">Email *</FormLabel>
                         <FormControl>
-                          <Input type="email" {...field} data-testid="input-email" />
+                          <Input type="email" className="bg-bg-light border-border-dark text-white" {...field} data-testid="input-email" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -222,10 +222,11 @@ export default function Onboarding() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone *</FormLabel>
+                        <FormLabel className="text-text-muted">Phone *</FormLabel>
                         <FormControl>
                           <Input 
                             placeholder="+91 XXXXXXXXXX (include country code)" 
+                            className="bg-bg-light border-border-dark text-white"
                             {...field} 
                             data-testid="input-phone"
                           />
@@ -239,10 +240,10 @@ export default function Onboarding() {
                     name="country"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Country *</FormLabel>
+                        <FormLabel className="text-text-muted">Country *</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger data-testid="select-country">
+                            <SelectTrigger className="bg-bg-light border-border-dark text-white" data-testid="select-country">
                               <SelectValue placeholder="Select Country" />
                             </SelectTrigger>
                           </FormControl>
@@ -263,10 +264,10 @@ export default function Onboarding() {
                     name="timezone"
                     render={({ field }) => (
                       <FormItem className="md:col-span-2">
-                        <FormLabel>Time Zone *</FormLabel>
+                        <FormLabel className="text-text-muted">Time Zone *</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger data-testid="select-timezone">
+                            <SelectTrigger className="bg-bg-light border-border-dark text-white" data-testid="select-timezone">
                               <SelectValue placeholder="Select Time Zone" />
                             </SelectTrigger>
                           </FormControl>
