@@ -72,7 +72,7 @@ export function GuidelinesModal({ open, onOpenChange }: GuidelinesModalProps) {
                       </p>
                       <div className="bg-gray-800 p-4 rounded-lg mb-4 border border-border-dark">
                         <p className="font-medium mb-1 text-white">Example:</p>
-                        <p className="text-sm mb-1 text-text-muted"><strong>Q:</strong> "What are the key differences between Series A and Series B funding?"</p>
+                        <p className="text-[#dde1eb]"><strong>Q:</strong> "What are the key differences between Series A and Series B funding?"</p>
                         <p className="text-sm text-text-muted">
                           <strong>A:</strong> "Series A focuses on product development and market validation with seed funding, 
                           while Series B is for scaling a proven business model, often with higher valuations and larger investments."
