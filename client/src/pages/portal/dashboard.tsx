@@ -154,7 +154,7 @@ export default function Dashboard() {
             <Button 
               onClick={handleReviewFeedback}
               variant="outline"
-              className="border-border-dark text-white hover:bg-gray-800"
+              className="border-border-dark text-[#23252f] hover:bg-gray-800"
               data-testid="quick-action-review"
             >
               <FileText className="mr-2 h-4 w-4" />
