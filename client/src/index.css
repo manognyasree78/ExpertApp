@@ -47,6 +47,12 @@
   --border-dark: hsl(215, 20%, 25%);
   --text-muted: hsl(215, 20%, 65%);
   --primary-hover: hsl(19, 86%, 46%);
+  
+  /* Status Colors per Specification */
+  --status-approved: hsl(142, 71%, 45%); /* #22C55E */
+  --status-review: hsl(38, 92%, 50%);    /* #F59E0B */
+  --status-revision: hsl(213, 94%, 68%); /* #60A5FA */
+  --status-rejected: hsl(0, 72%, 51%);   /* #EF4444 */
 }
 
 .dark {

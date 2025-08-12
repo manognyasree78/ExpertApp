@@ -20,7 +20,7 @@ export function PortalSidebar() {
   const [location, setLocation] = useLocation();
 
   return (
-    <aside className="w-64 bg-card-dark border-r border-border-dark min-h-screen" data-testid="portal-sidebar">
+    <aside className="w-64 bg-white border-r border-gray-200 min-h-screen" data-testid="portal-sidebar">
       <nav className="p-4 space-y-2">
         {navigation.map((item) => {
           const Icon = item.icon;
@@ -31,10 +31,10 @@ export function PortalSidebar() {
               key={item.name}
               onClick={() => setLocation(item.href)}
               className={cn(
-                "w-full flex items-center px-4 py-3 text-left rounded-lg transition-smooth",
+                "w-full flex items-center px-4 py-3 text-left rounded-xl transition-smooth",
                 isActive 
                   ? "bg-primary text-white" 
-                  : "text-text-muted hover:bg-gray-800 hover:text-white"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
               )}
               data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
