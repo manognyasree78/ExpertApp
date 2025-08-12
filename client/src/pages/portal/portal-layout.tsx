@@ -15,7 +15,10 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
   // Redirect if not approved
   useEffect(() => {
     if (!approval.approved) {
-      setLocation('/join');
+      // Escape the portal router's base when redirecting to the onboarding
+      // flow. Using a relative path would result in "/portal/join" which doesn't
+      // exist and would show a 404 page.
+      setLocation('~/join');
     }
   }, [approval.approved, setLocation]);
 
