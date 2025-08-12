@@ -212,7 +212,7 @@ export function GuidelinesModal({ open, onOpenChange }: GuidelinesModalProps) {
         </ScrollArea>
 
         <DialogFooter className="flex justify-end space-x-4">
-          <Button variant="outline" onClick={() => onOpenChange(false)} data-testid="button-close-guidelines">
+          <Button variant="outline" className="text-[#2a2c37]" onClick={() => onOpenChange(false)} data-testid="button-close-guidelines">
             <X className="mr-2 h-4 w-4" />
             Close
           </Button>
