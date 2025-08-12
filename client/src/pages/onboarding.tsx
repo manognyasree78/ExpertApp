@@ -530,10 +530,10 @@ export default function Onboarding() {
                                     />
                                   </FormControl>
                                   <div>
-                                    <FormLabel className="font-medium">
+                                    <FormLabel className="font-medium text-white">
                                       {option.label}
                                     </FormLabel>
-                                    <p className="text-sm text-gray-600">{option.desc}</p>
+                                    <p className="text-sm text-text-muted">{option.desc}</p>
                                   </div>
                                 </FormItem>
                               )
@@ -547,7 +547,7 @@ export default function Onboarding() {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                  <label className="block text-sm font-medium text-text-muted mb-3">
                     Expert Program Guidelines
                   </label>
                   {!onboarding.guidelinesRead ? (
@@ -561,14 +561,14 @@ export default function Onboarding() {
                       Read Expert Program Guidelines
                     </Button>
                   ) : (
-                    <div className="p-3 bg-green-50 border border-green-200 rounded-lg" data-testid="guidelines-acknowledged">
-                      <div className="flex items-center text-green-800">
+                    <div className="p-3 bg-green-900/20 border border-green-700 rounded-lg" data-testid="guidelines-acknowledged">
+                      <div className="flex items-center text-green-400">
                         <div className="flex-shrink-0">
                           <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                           </svg>
                         </div>
-                        <span className="ml-2 font-medium">Expert Program Guidelines Read</span>
+                        <span className="ml-2 font-medium text-green-400">Expert Program Guidelines Read</span>
                       </div>
                     </div>
                   )}
@@ -578,7 +578,7 @@ export default function Onboarding() {
                   control={form.control}
                   name="terms"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4 border border-gray-300 rounded-lg">
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4 border border-border-dark bg-gray-800 rounded-lg">
                       <FormControl>
                         <Checkbox 
                           checked={field.value} 
@@ -587,10 +587,10 @@ export default function Onboarding() {
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel className="font-medium text-gray-900">
+                        <FormLabel className="font-medium text-white">
                           I agree to the expertApp Terms & Conditions and Privacy Policy *
                         </FormLabel>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-text-muted">
                           By checking this box, you acknowledge that you have read and agree to our terms of service and privacy policy.
                         </p>
                       </div>
