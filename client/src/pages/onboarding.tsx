@@ -301,10 +301,10 @@ export default function Onboarding() {
             </Card>
 
             {/* Section 2: Professional Background */}
-            <Card>
+            <Card className="bg-card-dark border-border-dark">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Briefcase className="text-primary mr-3" />
+                <CardTitle className="flex items-center text-white text-lg">
+                  <div className="w-2 h-8 bg-primary rounded-full mr-3"></div>
                   Professional Background & Expertise
                 </CardTitle>
               </CardHeader>
@@ -314,7 +314,7 @@ export default function Onboarding() {
                   name="domains"
                   render={() => (
                     <FormItem>
-                      <FormLabel>Primary Domain(s) * (Select at least one)</FormLabel>
+                      <FormLabel className="text-text-muted">Primary Domain(s) * (Select at least one)</FormLabel>
                       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                         {domains.map((domain) => (
                           <FormField
@@ -342,7 +342,7 @@ export default function Onboarding() {
                                       data-testid={`checkbox-domain-${domain.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                                     />
                                   </FormControl>
-                                  <FormLabel className="text-sm font-normal">
+                                  <FormLabel className="text-sm font-normal text-text-muted">
                                     {domain}
                                   </FormLabel>
                                 </FormItem>
@@ -357,7 +357,7 @@ export default function Onboarding() {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-text-muted mb-2">
                     Specific Sub-Domains / Niche Areas
                   </label>
                   <div className="flex flex-wrap gap-2 mb-2" data-testid="subdomain-tags">
@@ -381,7 +381,7 @@ export default function Onboarding() {
                       onChange={(e) => setSubDomainInput(e.target.value)}
                       onKeyDown={handleSubDomainKeyPress}
                       placeholder="Type and press Enter to add tags"
-                      className="flex-1"
+                      className="flex-1 bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary"
                       data-testid="input-subdomain"
                     />
                     <Button 
@@ -401,10 +401,10 @@ export default function Onboarding() {
                     name="experience"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Years of Experience *</FormLabel>
+                        <FormLabel className="text-text-muted">Years of Experience *</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger data-testid="select-experience">
+                            <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-primary focus:ring-primary" data-testid="select-experience">
                               <SelectValue placeholder="Select Experience" />
                             </SelectTrigger>
                           </FormControl>
@@ -425,10 +425,10 @@ export default function Onboarding() {
                     name="qualification"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Highest Qualification / Certifications *</FormLabel>
+                        <FormLabel className="text-text-muted">Highest Qualification / Certifications *</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger data-testid="select-qualification">
+                            <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-primary focus:ring-primary" data-testid="select-qualification">
                               <SelectValue placeholder="Select Qualification" />
                             </SelectTrigger>
                           </FormControl>
@@ -451,10 +451,11 @@ export default function Onboarding() {
                   name="profileUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Professional Profile URL (LinkedIn preferred)</FormLabel>
+                      <FormLabel className="text-text-muted">Professional Profile URL (LinkedIn preferred)</FormLabel>
                       <FormControl>
                         <Input 
                           placeholder="https://linkedin.com/in/yourprofile" 
+                          className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary"
                           {...field} 
                           data-testid="input-profile-url"
                         />
@@ -469,11 +470,12 @@ export default function Onboarding() {
                   name="bio"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Brief Professional Bio (~250 words)</FormLabel>
+                      <FormLabel className="text-text-muted">Brief Professional Bio (~250 words)</FormLabel>
                       <FormControl>
                         <Textarea 
                           rows={4} 
                           placeholder="Describe your professional background, key achievements, and areas of expertise..." 
+                          className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary resize-none"
                           {...field} 
                           data-testid="textarea-bio"
                         />
@@ -486,10 +488,10 @@ export default function Onboarding() {
             </Card>
 
             {/* Section 3: Availability & Terms */}
-            <Card>
+            <Card className="bg-card-dark border-border-dark">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Clock className="text-primary mr-3" />
+                <CardTitle className="flex items-center text-white text-lg">
+                  <div className="w-2 h-8 bg-primary rounded-full mr-3"></div>
                   Availability & Terms
                 </CardTitle>
               </CardHeader>
@@ -499,7 +501,7 @@ export default function Onboarding() {
                   name="availability"
                   render={() => (
                     <FormItem>
-                      <FormLabel>Availability (Select all that apply)</FormLabel>
+                      <FormLabel className="text-text-muted">Availability (Select all that apply)</FormLabel>
                       <div className="space-y-3">
                         {availabilityOptions.map((option) => (
                           <FormField
@@ -510,7 +512,7 @@ export default function Onboarding() {
                               return (
                                 <FormItem
                                   key={option.value}
-                                  className="flex flex-row items-start space-x-3 space-y-0 p-3 border border-gray-300 rounded-lg"
+                                  className="flex flex-row items-start space-x-3 space-y-0 p-3 border border-border-dark bg-gray-800 rounded-lg"
                                 >
                                   <FormControl>
                                     <Checkbox
