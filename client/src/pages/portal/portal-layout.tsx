@@ -27,11 +27,11 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" data-testid="portal-layout">
+    <div className="min-h-screen bg-bg-dark text-white" data-testid="portal-layout">
       <PortalHeader />
       <div className="flex">
         <PortalSidebar />
-        <main className="flex-1 p-8 bg-gray-50">
+        <main className="flex-1 p-8 bg-bg-dark">
           {children}
         </main>
       </div>

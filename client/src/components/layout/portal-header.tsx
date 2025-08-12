@@ -30,18 +30,18 @@ export function PortalHeader() {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 shadow-sm" data-testid="portal-header">
+    <header className="bg-bg-dark border-b border-border-dark shadow-sm" data-testid="portal-header">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <span className="text-xl font-bold text-gray-900">Expert Knowledge Portal</span>
+            <span className="text-xl font-bold text-white">Expert Knowledge Portal</span>
           </div>
-          
+
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-900" data-testid="notifications-button">
+            <Button variant="ghost" size="sm" className="text-text-muted hover:text-white" data-testid="notifications-button">
               <Bell className="h-5 w-5" />
             </Button>
-            
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center space-x-3" data-testid="user-menu-trigger">
@@ -50,19 +50,19 @@ export function PortalHeader() {
                       {getInitials(auth.user.name)}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="font-medium text-gray-900" data-testid="user-name">
+                  <span className="font-medium text-white" data-testid="user-name">
                     Hi, {auth.user.name}
                   </span>
-                  <ChevronDown className="h-4 w-4 text-gray-500" />
+                  <ChevronDown className="h-4 w-4 text-text-muted" />
                 </Button>
               </DropdownMenuTrigger>
-              
-              <DropdownMenuContent align="end" className="w-48" data-testid="user-menu">
-                <DropdownMenuItem onClick={handleProfileSettings} data-testid="menu-profile-settings">
+
+              <DropdownMenuContent align="end" className="w-48 bg-card-dark border-border-dark text-white" data-testid="user-menu">
+                <DropdownMenuItem className="focus:bg-bg-dark focus:text-white" onClick={handleProfileSettings} data-testid="menu-profile-settings">
                   <Settings className="mr-2 h-4 w-4" />
                   Profile Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout} data-testid="menu-logout">
+                <DropdownMenuItem className="focus:bg-bg-dark focus:text-white" onClick={handleLogout} data-testid="menu-logout">
                   <LogOut className="mr-2 h-4 w-4" />
                   Logout
                 </DropdownMenuItem>
