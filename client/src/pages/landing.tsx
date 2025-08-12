@@ -107,7 +107,7 @@ export default function Landing() {
               variant="outline"
               size="lg"
               onClick={() => scrollToSection('for-experts')}
-              className="border-white/30 hover:border-white px-8 py-4 text-lg font-semibold transition-medium hover:bg-white/10"
+              className="border-white/30 hover:border-white px-8 py-4 text-lg font-semibold transition-medium hover:bg-white/10 text-[#1c1818]"
               data-testid="hero-explore"
             >
               <PlayCircle className="mr-2 h-5 w-5" />
