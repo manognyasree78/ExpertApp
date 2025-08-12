@@ -9,11 +9,14 @@ import {
 } from "lucide-react";
 
 const navigation = [
-  { name: 'Dashboard', href: '/portal/dashboard', icon: BarChart3 },
-  { name: 'Contribute Knowledge', href: '/portal/contribute', icon: PlusCircle },
-  { name: 'My Knowledge Status', href: '/portal/status', icon: CheckSquare },
-  { name: 'Earnings', href: '/portal/earnings', icon: TrendingUp },
-  { name: 'Support', href: '/portal/support', icon: LifeBuoy },
+  // the sidebar lives inside a router with base "/portal", so links should be
+  // relative to that base. Prefixing them with "/portal" again would produce
+  // URLs like "/portal/portal/dashboard" which fall through to the 404 page.
+  { name: 'Dashboard', href: '/dashboard', icon: BarChart3 },
+  { name: 'Contribute Knowledge', href: '/contribute', icon: PlusCircle },
+  { name: 'My Knowledge Status', href: '/status', icon: CheckSquare },
+  { name: 'Earnings', href: '/earnings', icon: TrendingUp },
+  { name: 'Support', href: '/support', icon: LifeBuoy },
 ];
 
 export function PortalSidebar() {

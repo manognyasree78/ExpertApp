@@ -19,7 +19,11 @@ import NotFound from "./pages/not-found";
 function PortalRedirect() {
   const [, setLocation] = useLocation();
   useEffect(() => {
-    setLocation('/portal/dashboard');
+    // When navigating within the nested portal router, paths are relative to
+    // the "/portal" base. Using an absolute path here would prepend another
+    // "/portal" segment resulting in a 404 (e.g. "/portal/portal/dashboard").
+    // Redirect directly to the dashboard using a relative path instead.
+    setLocation('/dashboard');
   }, [setLocation]);
   return null;
 }
