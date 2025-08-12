@@ -1,0 +1,368 @@
+---
+
+# Vibe Coding — Ottobon expertApp (Expert-Only, Static, All Pages)
+
+## Product goal
+
+Build a **static, fully navigable** expert platform for **Ottobon expertApp** with these flows:
+
+* **Landing (dark) → Join Now → Auth modal (Login/Signup) → Onboarding Form → Guidelines (scrollable) → Submit → Expert Portal**
+* Portal is a single-page app with client-side routes: **Dashboard, Contribute Knowledge, My Knowledge Status, Earnings, Support**.
+* **Profile Settings** opens **only** from the **avatar menu** in the portal header.
+* All state is local (in-memory + `localStorage`). No backend calls.
+
+---
+
+## Design system
+
+* **Brand:** Ottobon expertApp
+* **Dark palette** (match screenshot):
+
+  * `bg-dark` #0F172A, `card-dark` #111827
+  * `text-on-dark` #FFFFFF, `text-muted` #94A3B8
+  * `primary` #F97316 (CTA orange), `primary-hover` #EA580C
+  * `accent` #3B82F6 (blue), `border-dark` #1F2937, `border-light` #E5E7EB
+  * `card-light` #FFFFFF
+* **Type:** large bold headings; body 16–18px; comfy line-height
+* **Shape/Motion:** rounded-xl, soft shadows, 150–250ms fade/slide
+* **Accessibility:** WCAG AA contrast; visible focus rings; keyboard nav everywhere; **modals trap focus & close on Esc**; **body scroll locks** while a modal is open
+
+---
+
+## Routes, state, guards
+
+**Routes**
+
+* `/` → Landing (dark; **has landing navbar**)
+* `/join` → Expert Onboarding Form (light; **no landing navbar**; minimal header only)
+* `/portal/*` → Expert Portal (light; **own header & sidebar**)
+
+  * `/portal` → redirect to `/portal/dashboard`
+  * `/portal/dashboard`
+  * `/portal/contribute`
+  * `/portal/status`
+  * `/portal/earnings`
+  * `/portal/support`
+  * `/portal/profile`  *(reachable only from avatar menu)*
+
+**App state** (persist in `localStorage`)
+
+```json
+auth: { authed: false, user: { name: "", email: "" } },
+onboarding: { guidelinesRead: false, termsAccepted: false },
+approval: { approved: false }
+```
+
+**Guards**
+
+* If visiting `/join` and `auth.authed=false` → redirect to `/?auth=1` and **auto-open Auth modal**
+* If visiting `/portal/*` and `approval.approved=false` → go to `/join`
+
+**Logout**
+
+* Clears `auth`, `onboarding`, `approval` from `localStorage`, then route to `/`
+
+---
+
+## Landing page (dark • expert-only)
+
+**Navbar (only on ****************`/`****************)**
+
+* Left: brand “Ottobon expertApp”
+* Right links: `Home`, `About Us`, `For Experts`, `Contact`, `Login`, `Sign Up`
+
+  * `Login` & `Sign Up` open the Auth modal
+* Sticky, shadowed, disappears on other routes
+
+**Hero**
+
+* H1: **“Welcome to Expert App”** (or) **“Amplify Your Impact. Join the Expert Network on expertApp.”**
+* Sub: “Monetize your specialized knowledge, extend your reach, and let AI handle the routine. You step in when judgment matters.”
+* Primary CTA: **Join Now** (opens Auth modal)
+* Secondary CTA: “Explore How It Works” (smooth scroll)
+
+**Why Choose Expert Hub?** (3 tiles)
+
+* Intelligent Routing · Expert Knowledge · Real-time Responses
+
+**For Experts** (`id="for-experts"`)
+
+* Benefits bullets: Expand Reach · Flexible Earnings · AI-Powered Efficiency · Passive Income · Hassle-Free Escalations · Data-Driven Insights
+* 4 steps: Create Profile → Contribute Knowledge → Handle Escalations → Track Earnings
+* CTA: **Join Now** (Auth modal)
+
+**About** + **Contact** sections (dark cards). Contact has a small name/email/message form → toast “Sent (demo)”.
+
+> **Rule:** “Join Now” everywhere (no “Apply Now”/“Get Started”).
+
+---
+
+## Auth modal (expert-only)
+
+* **Tabs:** Login | Sign Up
+* **Login fields:** Email (valid), Password (min 6)
+* **Sign Up fields:** Full Name (required), Email (valid), Password (min 6), Confirm Password (match)
+* Submit disabled until valid
+* On submit:
+
+  * Set `auth.authed=true`, `auth.user={ name, email }` (derive name from email prefix if login did not provide)
+  * Close modal → navigate to `/join`
+* Modal requirements: focus-trap, Esc close, overlay click close, **lock body scroll**
+
+---
+
+## Expert Onboarding Form (`/join`) — light
+
+**Header (minimal):** left brand; right **“Back to Home”** link — **no landing navbar**
+
+**Title:** “Join the expertApp Network: Your Journey Starts Here”
+**Intro:** “Please provide your details below. This initial application helps us understand your expertise and how you’d like to partner with expertApp.”
+
+### Section 1 — Personal & Contact
+
+* Full Name (req), Email (req), Phone (req; `+91 XXXXXXXXXX (include country code)`)
+* Country (select; req): India, United States, United Kingdom, Canada, Australia, Germany, Singapore, United Arab Emirates
+* Time Zone (select; req): PST, EST, BRT, GMT, CET, EAT, IST, WIB, SGT, AEST
+
+### Section 2 — Professional Background & Expertise
+
+* Primary Domain(s) (checkbox chips; **at least one**): Python, Data Science, Cloud, Finance, Product Management, Legal, Compliance, E-commerce, Marketing, HR, Cybersecurity, DevOps, Design/UX, Other
+* Specific Sub-Domains / Niche Areas (tag input; Enter/comma to add; removable chips)
+* Years of Experience (select; req): 0–1, 2–3, 4–6, 7–10, 11–15, 16+
+* Highest Qualification / Certifications (select; req): Bachelor’s, Master’s, MBA, PhD, Professional Cert (CFA/PMP), Other
+* Professional Profile URL (LinkedIn preferred; optional)
+* Brief Professional Bio (multiline \~250 words; optional)
+
+### Section 3 — Availability & Terms
+
+* Availability (checkboxes; any): Part-time (≤10 hrs/wk), Flexible (on-demand), Full-time rapid response
+* **Guidelines gate**
+
+  * Button: **“Read Expert Program Guidelines”** → open **scrollable modal** (max-height **85vh**, `overflow-y:auto`, lock page scroll)
+  * Bottom actions: `Close` and **“I Have Read and Understood”**
+  * On acknowledge: set `onboarding.guidelinesRead=true`; in the form, replace button with pill **“✓ Expert Program Guidelines Read”**
+* **Terms** (required): “I agree to the expertApp Terms & Conditions and Privacy Policy.” → set `onboarding.termsAccepted=true`
+
+**Primary button:** **Submit Application**
+
+* Enabled only when required fields valid **and** `guidelinesRead` **and** `termsAccepted`
+* On click: save form to `localStorage`, set `approval.approved=true`, navigate to **`/portal/dashboard`**
+
+### Guidelines modal — full content (verbatim; scrollable)
+
+Use the entire guidelines text you provided (no shortening). Ensure it’s fully readable with vertical scroll; background cannot scroll while open.
+Title: **Expert Program Guidelines**
+Buttons: Close · **I Have Read and Understood** (sets `onboarding.guidelinesRead=true`)
+
+**Content (verbatim):**
+
+Welcome to expertApp Expert Network
+As an expert on the expertApp platform, you'll be part of an innovative AI-powered consulting ecosystem. These guidelines ensure quality service delivery and optimal user experience.
+
+**Knowledge Contribution: Powering expertApp AI Agents**
+Your invaluable expertise is the foundation of our AI agents. To ensure our AI can effectively learn and deliver high-quality insights to users, we require your knowledge to be provided in a structured and comprehensive manner.
+
+1. **Purpose of Knowledge Contribution:**
+   The knowledge you provide will be used to train our domain-specific AI agents, enabling them to answer a wide range of user queries confidently.
+2. **Recommended Knowledge Formats & Structure:**
+   To optimize AI learning and retrieval, please structure your knowledge as follows. We encourage clear, concise, and factual content.
+
+A. **Structured Q\&A Pairs (Primary Method):**
+Provide common questions within your domain and their definitive, expert answers. Think of questions users would typically ask and provide thorough, yet succinct, responses.
+**Example**
+Q: "What are the key differences between Series A and Series B funding?"
+A: "Series A focuses on product development and market validation with seed funding, while Series B is for scaling a proven business model, often with higher valuations and larger investments."
+
+B. **Topic-Specific Articles/Whitepapers:**
+Submit concise articles or mini-whitepapers on core topics within your sub-domains. These should cover fundamental concepts, best practices, and common challenges.
+Each article should be well-organized with headings, subheadings, and bullet points for readability.
+
+C. **Case Studies (with Solutions):**
+Present real or hypothetical case studies relevant to your expertise, outlining the problem, your expert analysis, and the recommended solution/strategy.
+Ensure all proprietary or sensitive client information is anonymized or removed.
+
+D. **Glossaries/Definitions:**
+Provide key industry terms and their precise definitions. This helps the AI understand domain-specific language.
+
+3. **Content Quality & Guidelines:**
+   • Accuracy: All information must be factually correct and up-to-date within your domain.
+   • Clarity & Conciseness: Write clearly and avoid jargon where simpler terms suffice. Aim for direct answers.
+   • Objectivity: Provide unbiased, professional insights. Avoid personal opinions or promotional content.
+   • Depth: While concise, ensure answers are comprehensive enough to be truly helpful.
+   • Originality: All submitted knowledge must be your original work or properly cited where external sources are referenced (for context, not for direct AI training).
+4. **How to Submit Your Knowledge:**
+   • Upon successful completion of your vetting, you will be granted access to our Expert Knowledge Portal (or a designated content management system).
+   • This portal will provide structured templates for Q\&A pairs, article submissions, and case studies, guiding you through the input process.
+   • Accepted File Formats (for initial drafts/bulk upload if applicable): For initial bulk submissions, we accept documents in .docx, .txt, and structured .csv or .json for Q\&A pairs.
+   • Review Process: Your submitted knowledge will undergo a review process by our content team to ensure it meets our quality and formatting standards for AI ingestion.
+
+**Expert Responsibilities**
+• Provide accurate, professional, and ethical guidance within your domain of expertise
+• Respond to escalated queries promptly through WhatsApp integration
+• Maintain confidentiality of all user interactions and sensitive information
+• Stay updated with industry trends and best practices in your field
+• Communicate clearly and professionally in all interactions
+
+**Quality Standards**
+• All responses must be factual, well-researched, and actionable
+• Avoid speculation or advice outside your area of expertise
+• Provide sources and references when applicable
+• Tailor responses to the user's specific context and needs
+• Maintain a professional tone while being approachable
+
+**Platform Integration**
+• AI handles initial screening - you'll receive only relevant escalations
+• Respond through WhatsApp when human expertise is required
+• Your responses will be integrated back into the AI system for learning
+• Use the expert dashboard to track your performance and earnings
+• Report any technical issues or concerns promptly
+
+**Compensation Models**
+**Sell Knowledge Model:** Fixed payout for knowledge base contribution. Your expertise trains an AI agent you own.
+**Revenue Sharing Model:** Usage-based compensation for real-time interventions and ongoing support.
+*(Note: The choice is discussed during vetting—do not ask for it in the onboarding form.)*
+
+**Code of Conduct**
+• Respect user privacy and maintain strict confidentiality
+• Avoid conflicts of interest and disclose any potential biases
+• Do not solicit users for external business or personal gain
+• Report inappropriate user behavior or requests
+• Adhere to all applicable laws and professional standards
+
+**Performance Metrics**
+• Response time: Aim for replies within 4–6 hours during your available hours
+• User satisfaction: Maintain high ratings through quality responses
+• Accuracy: Provide correct and actionable advice consistently
+• Engagement: Actively participate in platform improvement initiatives
+
+**Getting Started**
+Once approved, you'll receive onboarding materials, access to your expert dashboard, and WhatsApp integration setup. Our team will guide you through the initial knowledge contribution process and help optimize your expert profile.\\
+
+---
+
+## Expert Portal (`/portal/*`) — light
+
+### Portal header (not the landing navbar)
+
+* Left: **Expert Knowledge Portal**
+* Right: text **“Hi, {auth.user.name}”** + **circular avatar** (initials)
+* Avatar dropdown:
+
+  * **Profile Settings** → route to `/portal/profile`
+  * **Logout** → clear all state, route to `/`
+
+### Sidebar (persistent)
+
+* **Dashboard** → `/portal/dashboard`
+* **Contribute Knowledge** → `/portal/contribute`
+* **My Knowledge Status** → `/portal/status`
+* **Earnings** → `/portal/earnings`
+* **Support** → `/portal/support`
+
+> **Profile Settings is not in the sidebar** (only via avatar menu)
+
+#### `/portal/dashboard`
+
+* Welcome: **“Welcome, {name}!”**
+* 4 metric cards:
+
+  * Knowledge Contributed — **56 Q\&A Pairs** (small: *3 Articles*)
+  * Total Earnings — **\$2,450** (small: *This month: \$320*)
+  * User Interactions — **1,234** (small: *95% satisfaction*)
+  * Active Agents — **2** (small: *Marketing & Finance*)
+* Quick Actions:
+
+  * **Contribute New Knowledge** → `/portal/contribute`
+  * **Review My Feedback** → `/portal/status`
+* Recent Activity (5 items):
+
+  * Q\&A Pair #57 submitted for review
+  * Article ‘Digital Marketing ROI’ approved
+  * Revenue sharing payment of \$85 processed
+  * New escalation received in Marketing domain
+  * Knowledge base updated with 5 new entries
+
+#### `/portal/contribute`
+
+* Tabs: **Q\&A Pairs** (default) | **Articles**
+* **Q\&A Pairs**:
+
+  * Repeatable **Q\&A Pair #n** blocks
+  * Fields: Domain/Sub-domain (select; e.g., Marketing → SEO, Finance → General, Legal → Compliance), **Question**, **Answer**
+  * Buttons:
+
+    * “+ Add Another Q\&A” (adds block)
+    * “Upload Bulk Q\&A (CSV/JSON)” (file picker; toast **“Uploaded (demo)”**)
+    * “Save & Submit for Review” (toast **“Saved and submitted (demo)”**)
+* **Articles**:
+
+  * Fields: Title, Domain (select), Body (multiline with guidance)
+  * Button: “Save & Submit for Review” (toast)
+
+#### `/portal/status`  (My Knowledge Status & Feedback)
+
+* Controls: **Status** filter (All / Approved / Under Review / Needs Revision / Rejected), **Sort by** (Last Updated)
+* Static rows w/ status chips (match screenshots):
+
+  * Digital Marketing ROI — Article — Marketing — **Approved** (green)
+  * Investment Portfolio Diversification — Q\&A Pair — Finance — **Under Review** (yellow)
+  * GDPR Compliance Checklist — Article — Legal — **Needs Revision** (blue)
+  * Social Media Strategy Q\&A Set — Q\&A Pair — Marketing — **Approved** (green)
+  * Startup Funding Basics — Article — Business — **Rejected** (red)
+
+#### `/portal/earnings`
+
+* Top cards:
+
+  * Total Earnings **\$14,630** (+12.5%)
+  * This Month **\$3,250** (+8.2%)
+  * Avg per Contribution **\$47.50** (+5.2% bonus)
+  * Agent Interactions **2,840** (95.2% satisfaction)
+* “Earnings Trend” line chart (static SVG ok)
+* Revenue Sources pie + legend: Q\&A Pairs \$6,350; Articles \$4,800; Agent Usage \$2,130; Escalations \$1,350
+* Recent Earnings (5 items): \$850 Q\&A; \$600 Article Bonus; \$425 Usage; \$750 Q\&A; \$300 Escalation Fees
+
+#### `/portal/profile`  *(from avatar menu)*
+
+* Tabs: **Personal**, **Expertise**, **Notifications**, **Payments**, **Security**
+* **Personal:** avatar placeholder + First/Last, Email, Phone, Location, Company, Professional Bio (counter), LinkedIn, Personal Website → **Save Changes** (toast)
+* **Expertise:** domain chips (Digital Marketing, SEO Strategy, Business Analytics, Financial Planning) + **Domain Verification Status** list with badges (**Verified**, **Pending**). Bottom quick stats: **4.8/5.0 Expert Rating**, **127 Contributions**, **2,840 User Helps**
+* **Notifications:** toggles (Email updates, WhatsApp escalations, Monthly summary)
+* **Payments:** method (Bank Transfer / PayPal / UPI) + Account/ID
+* **Security:** buttons (Change Password, Enable 2-Factor Auth, Download Data) — toasts only
+
+#### `/portal/support`
+
+* Contact card with `support@ottobon.in` and “We’ll reply within 24 hours on business days.”
+
+---
+
+## Interactions & persistence
+
+* Client-side routing only; no reloads
+* All buttons show gentle **toasts** (success/info) where appropriate
+* Persist:
+
+  * `auth` after Login/Signup (so name shows in portal header)
+  * `onboarding.guidelinesRead` + `onboarding.termsAccepted`
+  * `approval.approved` after Submit
+* **Avatar menu** actions:
+
+  * Profile Settings → `/portal/profile`
+  * Logout → clear state → `/`
+
+---
+
+## Acceptance checklist (QA)
+
+1. Landing uses dark theme; **navbar appears only on \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*`/`**.
+2. All expert CTAs read **Join Now**; they open the Auth modal.
+3. Auth modal validates, traps focus, locks scroll; submit → `/join` and stores name/email.
+4. Onboarding form matches all fields; **Guidelines modal is scrollable** and must be acknowledged; **Submit** stays disabled until required fields + guidelines + terms are done.
+5. Submit sets approval and routes to `/portal/dashboard`.
+6. Portal header shows **Hi, {name}** and an **avatar**; avatar menu has **Profile Settings** and **Logout** (logout returns to landing and clears state).
+7. Sidebar pages: **Dashboard, Contribute Knowledge, My Knowledge Status, Earnings, Support** all open and show the specified content.
+8. **Profile Settings page** opens only from avatar menu and matches the screenshots (tabs, fields, badges, stats).
+9. All interactive elements have visible focus; everything is keyboard accessible.
+
+---
