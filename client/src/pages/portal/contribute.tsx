@@ -154,23 +154,23 @@ export default function Contribute() {
           ))}
 
           <div className="flex flex-wrap gap-4">
-            <Button 
+            <Button
               onClick={addQAPair}
               variant="outline"
-              className="border-border-dark text-white hover:bg-gray-800"
+              className="bg-card-dark border-border-dark text-white hover:bg-gray-800 hover:text-white"
             >
               <Plus className="mr-2 h-4 w-4" />
               Add Another Q&A
             </Button>
-            <Button 
+            <Button
               onClick={handleFileUpload}
               variant="outline"
-              className="border-border-dark text-white hover:bg-gray-800"
+              className="bg-card-dark border-border-dark text-white hover:bg-gray-800 hover:text-white"
             >
               <Upload className="mr-2 h-4 w-4" />
               Upload Bulk Q&A (CSV/JSON)
             </Button>
-            <Button 
+            <Button
               onClick={submitQAPairs}
               className="bg-primary hover:bg-primary-hover"
             >

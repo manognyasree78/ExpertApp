@@ -51,10 +51,10 @@ export default function Support() {
             <MessageCircle className="h-8 w-8 text-accent mx-auto mb-3" />
             <h3 className="font-medium text-white mb-2">Live Chat</h3>
             <p className="text-text-muted text-sm mb-3">Real-time assistance</p>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
-              className="border-border-dark text-white hover:bg-gray-800"
+              className="bg-card-dark border-border-dark text-white hover:bg-gray-800 hover:text-white"
               onClick={() => toast({ title: "Chat", description: "Live chat feature coming soon" })}
             >
               Start Chat
